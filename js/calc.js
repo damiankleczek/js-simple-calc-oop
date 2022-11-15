@@ -1,8 +1,33 @@
-export class Calc {
-  constructor(numA, numB, sign) {
-    this.numA = numA;
-    this.numB = numB;
-    this.sign = sign;
+import { UserInterface } from './userInterface.js';
+
+export class Calc extends UserInterface {
+  constructor() {
+    super();
+    this.numA = null;
+    this.numB = null;
+    this.operation = null;
+  }
+
+  init() {
+    for (const btn of this.buttons) {
+      btn.addEventListener('click', e => {
+        let result = '';
+
+        try {
+          result = this.calculate(e);
+        } catch (error) {
+          result = error.message;
+        } finally {
+          this.showResult(result);
+        }
+      });
+    }
+  }
+
+  getData(e) {
+    this.numA = Number(this.getInputValue('num-a'));
+    this.numB = Number(this.getInputValue('num-b'));
+    this.operation = e.target.closest('div').getAttribute('data-operation');
   }
 
   add() {
@@ -46,20 +71,20 @@ export class Calc {
   }
 
   handleOperation() {
-    switch (this.sign) {
-      case '+':
+    switch (this.operation) {
+      case 'add':
         return this.add();
-      case '-':
+      case 'subtract':
         return this.subtract();
-      case '*':
+      case 'multiply':
         return this.multiply();
-      case '/':
+      case 'divide':
         return this.divide();
-      case '^':
+      case 'power':
         return this.power();
 
       default:
-        throw new Error('Invalid operation!');
+        break;
     }
   }
 
@@ -67,7 +92,7 @@ export class Calc {
     return this.handleOperation();
   }
 
-  calculate() {
-    return this.areNumbersValid() ?? this.getResult();
+  calculate(e) {
+    return this.getData(e) ?? this.areNumbersValid() ?? this.getResult();
   }
 }
