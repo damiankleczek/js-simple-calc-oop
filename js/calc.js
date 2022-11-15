@@ -59,6 +59,10 @@ export class Calc extends UserInterface {
     return !typeof number === 'number';
   }
 
+  isNumberInfinite(number) {
+    return !Number(isFinite(number));
+  }
+
   areNumbersValid() {
     if (
       this.isNan(this.numA) ||
@@ -88,11 +92,17 @@ export class Calc extends UserInterface {
     }
   }
 
-  getResult() {
-    return this.handleOperation();
+  getValidatedResult() {
+    const result = this.handleOperation();
+
+    if (this.isNumberInfinite(result))
+      throw new Error('Result value is too big!');
+    return result;
   }
 
   calculate(e) {
-    return this.getData(e) ?? this.areNumbersValid() ?? this.getResult();
+    return (
+      this.getData(e) ?? this.areNumbersValid() ?? this.getValidatedResult()
+    );
   }
 }
