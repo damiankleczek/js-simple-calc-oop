@@ -15,8 +15,10 @@ export class Calc extends UserInterface {
 
         try {
           result = this.calculate(e);
+          this.setErrorStyles(false);
         } catch (error) {
           result = error.message;
+          this.setErrorStyles(true);
         } finally {
           this.showResult(result);
         }

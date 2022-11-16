@@ -2,6 +2,7 @@ export class UserInterface {
   constructor() {
     this.buttons = [...this.getButtons('.btn')];
     this.resultDiv = this.getSelector('.result-value');
+    this.resultBorder = this.getSelector('.result');
   }
 
   getSelector(selector) {
@@ -18,5 +19,14 @@ export class UserInterface {
 
   showResult(value) {
     this.resultDiv.textContent = `${value}`;
+  }
+
+  setErrorStyles(isEnabled) {
+    if (!isEnabled) {
+      this.resultBorder.classList.remove('border-red');
+      return;
+    }
+
+    this.resultBorder.classList.add('border-red');
   }
 }

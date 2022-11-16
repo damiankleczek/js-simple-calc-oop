@@ -6,6 +6,7 @@
   --beige: hsl(20, 37%, 92%);
   --grayish-blue: hsl(224, 37%, 28%);
   --yellow: hsl(47, 84%, 52%);
+  --error-red: hsl(0, 100%, 45%);
 }
 
 * {
@@ -118,4 +119,8 @@ input::placeholder {
   width: 15em;
   height: 3em;
   color: var(--beige);
+}
+
+.border-red {
+  border-color: var(--error-red);
 }
