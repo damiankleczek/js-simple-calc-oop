@@ -27,8 +27,8 @@ export class Calc extends UserInterface {
   }
 
   getData(e) {
-    this.numA = Number(this.getInputValue('num-a'));
-    this.numB = Number(this.getInputValue('num-b'));
+    this.numA = this.getInputValue('num-a');
+    this.numB = this.getInputValue('num-b');
     this.operation = e.target.closest('div').getAttribute('data-operation');
   }
 
@@ -53,8 +53,12 @@ export class Calc extends UserInterface {
     return this.numA ** this.numB;
   }
 
+  isEmpty(field) {
+    return field === '' || field === null || field === undefined;
+  }
+
   isNan(number) {
-    return Number.isNaN(number);
+    return Number.isNaN(Number(number));
   }
 
   isNotNumber(number) {
@@ -66,6 +70,9 @@ export class Calc extends UserInterface {
   }
 
   areNumbersValid() {
+    if (this.isEmpty(this.numA) || this.isEmpty(this.numB))
+      throw new Error("Fields can't be empty!");
+
     if (
       this.isNan(this.numA) ||
       this.isNan(this.numB) ||
@@ -74,6 +81,11 @@ export class Calc extends UserInterface {
     ) {
       throw new Error('Please enter valid numbers!');
     }
+  }
+
+  convertDataToNumbers() {
+    this.numA = Number(this.numA);
+    this.numB = Number(this.numB);
   }
 
   handleOperation() {
@@ -104,7 +116,10 @@ export class Calc extends UserInterface {
 
   calculate(e) {
     return (
-      this.getData(e) ?? this.areNumbersValid() ?? this.getValidatedResult()
+      this.getData(e) ??
+      this.areNumbersValid() ??
+      this.convertDataToNumbers() ??
+      this.getValidatedResult()
     );
   }
 }
