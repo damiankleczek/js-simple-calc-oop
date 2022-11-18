@@ -28,9 +28,17 @@ body {
   height: 100vh;
 }
 
-.title {
+main {
   display: flex;
+  flex-direction: column;
   justify-content: center;
+  width: min(90%, 31.25em);
+  height: 90%;
+}
+
+.title {
+  font-size: clamp(1.5em, 8vw, 2em);
+  text-align: center;
   color: var(--yellow);
 }
 
@@ -39,24 +47,30 @@ body {
   flex-direction: column;
   border: 0.0625em solid var(--dark-gray);
   border-radius: 0.5em;
-  margin-top: 2em;
+  margin-top: clamp(0.25em, 5vh, 2em);
   padding: 0.5em;
-  width: 31.25em;
-  height: 18.75em;
+  min-width: 13em;
+  height: min(90%, 19.875em);
   background-color: var(--dark-gray);
 }
 
 .inputs {
   display: flex;
   flex: 1;
+  flex-wrap: wrap;
   justify-content: space-evenly;
   align-items: center;
+  margin-inline: 0.5em;
+}
+
+.inputs div {
+  margin: 0.2em 0.5em;
 }
 
 input {
   border: 0.0625em solid var(--grayish-blue);
   border-radius: 0.5em;
-  padding: 0.5em;
+  padding: 0.25em;
   height: 2.8em;
   background-color: transparent;
   color: var(--beige);
@@ -80,8 +94,10 @@ input::placeholder {
   display: flex;
   flex: 1;
   justify-content: center;
+  align-items: center;
+  flex-wrap: wrap;
   gap: 1em;
-  margin-top: 0.8em;
+  margin: 0.5em 0;
 }
 
 .btn {
@@ -116,6 +132,8 @@ input::placeholder {
   align-items: center;
   border: 0.0625em solid var(--grayish-blue);
   border-radius: 0.5em;
+  margin: 0.2em 0;
+  padding: 0.5em;
   width: 15em;
   height: 3em;
   color: var(--beige);
