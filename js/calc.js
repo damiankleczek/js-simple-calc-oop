@@ -1,34 +1,32 @@
-import { UserInterface } from './userInterface.js';
-
-export class Calc extends UserInterface {
-  constructor() {
-    super();
+export class Calc {
+  constructor(ui) {
+    this.ui = ui;
     this.numA = null;
     this.numB = null;
     this.operation = null;
   }
 
   init() {
-    for (const btn of this.buttons) {
+    for (const btn of this.ui.buttons) {
       btn.addEventListener('click', e => {
         let result = '';
 
         try {
           result = this.calculate(e);
-          this.setErrorStyles(false);
+          this.ui.setErrorStyles(false);
         } catch (error) {
           result = error.message;
-          this.setErrorStyles(true);
+          this.ui.setErrorStyles(true);
         } finally {
-          this.showResult(result);
+          this.ui.showResult(result);
         }
       });
     }
   }
 
   getData(e) {
-    this.numA = this.getInputValue('num-a');
-    this.numB = this.getInputValue('num-b');
+    this.numA = this.ui.getInputValue('num-a');
+    this.numB = this.ui.getInputValue('num-b');
     this.operation = e.target.closest('div').getAttribute('data-operation');
   }
 
