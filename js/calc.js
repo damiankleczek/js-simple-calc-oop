@@ -7,27 +7,30 @@ export class Calc {
   }
 
   init() {
-    for (const btn of this.ui.buttons) {
-      btn.addEventListener('click', e => {
-        let result = '';
-
-        try {
-          result = this.calculate(e);
-          this.ui.setErrorStyles(false);
-        } catch (error) {
-          result = error.message;
-          this.ui.setErrorStyles(true);
-        } finally {
-          this.ui.showResult(result);
-        }
-      });
-    }
+    this.ui.btnsContainer.addEventListener('click', this.handleButtonClick);
   }
+
+  handleButtonClick = e => {
+    const target = this.ui.getClickedButtonAttribute(e, 'class');
+    if (target === 'btn') {
+      let result = '';
+
+      try {
+        result = this.calculate(e);
+        this.ui.setErrorStyles(false);
+      } catch (error) {
+        result = error.message;
+        this.ui.setErrorStyles(true);
+      } finally {
+        this.ui.showResult(result);
+      }
+    }
+  };
 
   getData(e) {
     this.numA = this.ui.getInputValue('num-a');
     this.numB = this.ui.getInputValue('num-b');
-    this.operation = e.target.closest('div').getAttribute('data-operation');
+    this.operation = this.ui.getClickedButtonAttribute(e, 'data-operation');
   }
 
   add() {

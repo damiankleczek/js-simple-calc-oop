@@ -1,6 +1,6 @@
 export class UserInterface {
   constructor() {
-    this.buttons = [...this.getButtons('.btn')];
+    this.btnsContainer = this.getSelector('.btns-container');
     this.resultDiv = this.getSelector('.result-value');
     this.resultBorder = this.getSelector('.result');
   }
@@ -13,8 +13,8 @@ export class UserInterface {
     return this.getSelector(`[name="${inputName}"]`).value;
   }
 
-  getButtons(selector) {
-    return document.querySelectorAll(selector);
+  getClickedButtonAttribute(e, attribute) {
+    return e.target.closest('div').getAttribute(attribute);
   }
 
   showResult(value) {
